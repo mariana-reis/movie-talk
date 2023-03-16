@@ -1,3 +1,15 @@
+<?php
+  require_once("globals.php");
+  require_once("db.php");
+  require_once("dao/UserDAO.php");
+  
+  $userDAO = new UserDAO($conn, $BASE_URL);
+  
+  $userData = $userDAO->verifyToken();
+
+?>
+
+
 <footer id="footer">
     <div id="social-container">
       <ul>
@@ -14,9 +26,13 @@
     </div>
     <div id="footer-links-container">
       <ul>
-        <li><a href="#">Adicionar filme</a></li>
-        <li><a href="#">Adicionar critica</a></li>
-        <li><a href="#">Entrar / Registrar</a></li>
+        <li><a href="<?= $BASE_URL ?>index.php">Home</a></li>
+        <?php if( $userData == true): ?>
+          <li><a href="<?= $BASE_URL ?>newmovie.php">Adicionar filme</a></li>
+          <li><a href="<?= $BASE_URL ?>dashboard.php">Meus Filmes</a></li>
+        <?php else: ?>
+          <li><a href="<?= $BASE_URL ?>auth.php">Entrar / Registrar</a></li>
+        <?php endif ?>
       </ul>
     </div>
     <p>&copy; 2023 Mariana Silva</p>
